@@ -18,7 +18,7 @@ class Main extends PluginBase implements Listener {
 
 	public function onEnable() {
 		$this->getServer()->getPluginManager()->registerEvents($this, $this);
-		$this->nicknameDB = new Config($this->getDataFolder()."Nick.json", Config::JSON);
+		$this->nicknameDB = new Config($this->getDataFolder()."Nicknames.json", Config::JSON);
 	}
 
 	public function onJoin(PlayerJoinEvent $event) {
@@ -37,12 +37,12 @@ class Main extends PluginBase implements Listener {
 		}
 
 		$target = $sender->getName();
-		if(isset($args[1]) and $sender->hasPermission("nick.other")) {
+		if(isset($args[1]) and $sender->hasPermission("nicknames.other")) {
 			$target = $args[1];
-		}elseif(!$sender->hasPermission("nick.other")) {
+		}elseif(!$sender->hasPermission("nicknames.other")) {
 			$sender->sendMessage($this->getServer()->getLanguage()->translateString(TextFormat::RED."%commands.generic.permission"));
 			return false;
-		}elseif(!$sender->hasPermission("nick.use")) {
+		}elseif(!$sender->hasPermission("nicknames.use")) {
 			$sender->sendMessage($this->getServer()->getLanguage()->translateString(TextFormat::RED."%commands.generic.permission"));
 			return false;
 		}
