@@ -15,10 +15,14 @@ class Main extends PluginBase implements Listener {
 
 	/** @var Config $nicknameDB */
 	protected $nicknameDB;
-
+	
+    public $economy;
 	public function onEnable() {
 		$this->getServer()->getPluginManager()->registerEvents($this, $this);
 		$this->nicknameDB = new Config($this->getDataFolder()."Nicknames.json", Config::JSON);
+		if ($this->getServer()->getPluginManager()->getPlugin("EconomyAPI")) {
+		    $this->economy = $this->getServer()->getPluginManager()->getPlugin("EconomyAPI");
+		}
 	}
 
 	public function onJoin(PlayerJoinEvent $event) {
@@ -58,10 +62,21 @@ class Main extends PluginBase implements Listener {
 			$this->nicknameDB->set($target, $target);
 			$this->nicknameDB->save();
 		}else {
-			$sender->setDisplayName($target);
+		    if (!$this->getConfig()->get("economy") or $this->getServer()->getPluginManager()->getPlugin("EconomyAPI")) {
+		        $sender->setDisplayName($target);
 			$sender->sendMessage(TextFormat::GREEN."Nickname set to ".$args[0]);
 			$this->nicknameDB->set($target, $args[0]);
 			$this->nicknameDB->save();
+		    }
+		    if (!$this->economy->myMoney($player) >= $this->getConfig()->get("buyprice") && $this->getConfig->get("economy")) {
+		        $sender->setDisplayName($target);
+			$sender->sendMessage(TextFormat::GREEN."Nickname set to ".$args[0]." For $".$this->getConfig()->get("buyprice"));
+			$this->nicknameDB->set($target, $args[0]);
+			$this->nicknameDB->save();
+			$this->economy->reduceMoney($player, $this->getConfig()->get("buyprice"));
+		    }else{
+		        $sender->sendMessage(TextFormat::RED."You Do Not Have Enough Money To Do This, You Need ".$this->getConfig()->get("buyprice"));
+		    }
 		}
 		return true;
 	}
