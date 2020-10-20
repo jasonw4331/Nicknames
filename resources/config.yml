@@ -1,0 +1,4 @@
+# Use EconomyAPI, If False, Players Cant Use Money To Buy A NickName #
+economy: false
+# Price To Buy A NickName If economy Is True #
+buyprice: 5000
