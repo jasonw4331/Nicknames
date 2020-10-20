@@ -9,6 +9,11 @@ Let your players and your staff to change they're names how they want!
 # Features
 * Allows changing a player's display name
 
+# Permissions
+* `nicknames` Nickname command permission
+* `nicknames.use` Allows you to nickname yourself!
+* `nicknames.others` Allows you to nickname others!
+
 # Future Additions
 * None planned. Leave requests in the reviews on poggit.
 
