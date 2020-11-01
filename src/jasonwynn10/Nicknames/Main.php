@@ -2,6 +2,8 @@
 declare(strict_types=1);
 namespace jasonwynn10\Nicknames;
 
+use _64FF00\PureChat\PureChat;
+use _64FF00\PurePerms\PurePerms;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\event\Listener;
@@ -15,10 +17,16 @@ class Main extends PluginBase implements Listener {
 
 	/** @var Config $nicknameDB */
 	protected $nicknameDB;
+	/** @var PureChat|null $purechat */
+	private $purechat;
+	/** @var PurePerms|null $pureperms */
+	private $pureperms;
 
 	public function onEnable() {
 		$this->getServer()->getPluginManager()->registerEvents($this, $this);
 		$this->nicknameDB = new Config($this->getDataFolder()."Nicknames.json", Config::JSON);
+		$this->purechat = $this->getServer()->getPluginManager()->getPlugin("PureChat");
+		$this->pureperms = $this->getServer()->getPluginManager()->getPlugin("PurePerms");
 	}
 
 	public function onJoin(PlayerJoinEvent $event) {
@@ -29,6 +37,7 @@ class Main extends PluginBase implements Listener {
 		}
 		$nick = $this->nicknameDB->get($player->getName(), $player->getName());
 		$player->setDisplayName($nick);
+		$this->updatePureChatNickname($player, $nick);
 	}
 
 	public function onCommand(CommandSender $sender, Command $cmd, string $label, array $args) : bool {
@@ -59,12 +68,28 @@ class Main extends PluginBase implements Listener {
 			$sender->sendMessage(TextFormat::GREEN."Nickname reset");
 			$this->nicknameDB->set($target, $target);
 			$this->nicknameDB->save();
+
+			$this->updatePureChatNickname($sender, $target);
 		}else {
 			$player->setDisplayName($args[0]);
 			$sender->sendMessage(TextFormat::GREEN."Nickname set to ".$args[0]);
 			$this->nicknameDB->set($target, $args[0]);
 			$this->nicknameDB->save();
+
+			$this->updatePureChatNickname($sender, $args[0]);
 		}
 		return true;
+	}
+
+	public function updatePureChatNickname(Player $player, string $nickname) {
+		if($this->purechat !== null and $this->pureperms !== null) {
+			$original = $this->purechat->getOriginalNametag($player, $player->getLevel()->getFolderName());
+			$new = str_replace('{display_name}', $nickname, $original);
+			$this->purechat->setOriginalNametag($this->pureperms->getUserDataMgr()->getGroup($player, $player->getLevel()->getFolderName()), $new, $player->getLevel()->getFolderName());
+
+			$original = $this->purechat->getOriginalChatFormat($player, $player->getLevel()->getFolderName());
+			$new = str_replace('{display_name}', $nickname, $original);
+			$this->purechat->setOriginalChatFormat($this->pureperms->getUserDataMgr()->getGroup($player, $player->getLevel()->getFolderName()), $new, $player->getLevel()->getFolderName());
+		}
 	}
 }
