@@ -52,13 +52,15 @@ class Main extends PluginBase implements Listener {
 			return true;
 		}
 
+		$player = $this->getServer()->getPlayer($target);
+
 		if($args[0] === "reset") {
-			$sender->setDisplayName($target);
+			$player->setDisplayName($target);
 			$sender->sendMessage(TextFormat::GREEN."Nickname reset");
 			$this->nicknameDB->set($target, $target);
 			$this->nicknameDB->save();
 		}else {
-			$sender->setDisplayName($target);
+			$player->setDisplayName($args[0]);
 			$sender->sendMessage(TextFormat::GREEN."Nickname set to ".$args[0]);
 			$this->nicknameDB->set($target, $args[0]);
 			$this->nicknameDB->save();
