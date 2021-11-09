@@ -13,15 +13,14 @@ use pocketmine\utils\TextFormat;
 
 class Main extends PluginBase implements Listener {
 
-	/** @var Config $nicknameDB */
-	protected $nicknameDB;
+	protected Config $nicknameDB;
 
 	public function onEnable() {
 		$this->getServer()->getPluginManager()->registerEvents($this, $this);
 		$this->nicknameDB = new Config($this->getDataFolder()."Nicknames.json", Config::JSON);
 	}
 
-	public function onJoin(PlayerJoinEvent $event) {
+	public function onJoin(PlayerJoinEvent $event) : void {
 		$player = $event->getPlayer();
 		if(!$this->nicknameDB->exists($player->getName())) {
 			$this->nicknameDB->set($player->getName(), $player->getName());
@@ -31,8 +30,8 @@ class Main extends PluginBase implements Listener {
 		$player->setDisplayName($nick);
 	}
 
-	public function onCommand(CommandSender $sender, Command $cmd, string $label, array $args) : bool {
-		if(empty($args[0]) or (!$sender instanceof Player and empty($args[1]))) {
+	public function onCommand(CommandSender $sender, Command $command, string $label, array $args) : bool {
+		if(!isset($args[0]) or (!$sender instanceof Player and !isset($args[1]))) {
 			return false;
 		}
 
@@ -53,18 +52,21 @@ class Main extends PluginBase implements Listener {
 		}
 
 		$player = $this->getServer()->getPlayer($target);
+		if($player === null) {
+			$sender->sendMessage(TextFormat::RED."Invalid player selected");
+			return true;
+		}
 
 		if($args[0] === "reset") {
 			$player->setDisplayName($target);
 			$sender->sendMessage(TextFormat::GREEN."Nickname reset");
 			$this->nicknameDB->set($target, $target);
-			$this->nicknameDB->save();
 		}else {
 			$player->setDisplayName($args[0]);
 			$sender->sendMessage(TextFormat::GREEN."Nickname set to ".$args[0]);
 			$this->nicknameDB->set($target, $args[0]);
-			$this->nicknameDB->save();
 		}
+		$this->nicknameDB->save();
 		return true;
 	}
 }
