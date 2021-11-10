@@ -6,7 +6,7 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerJoinEvent;
-use pocketmine\Player;
+use pocketmine\player\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat;
@@ -15,7 +15,7 @@ class Main extends PluginBase implements Listener {
 
 	protected Config $nicknameDB;
 
-	public function onEnable() {
+	public function onEnable() : void {
 		$this->getServer()->getPluginManager()->registerEvents($this, $this);
 		$this->nicknameDB = new Config($this->getDataFolder()."Nicknames.json", Config::JSON);
 	}
@@ -51,7 +51,7 @@ class Main extends PluginBase implements Listener {
 			return true;
 		}
 
-		$player = $this->getServer()->getPlayer($target);
+		$player = $this->getServer()->getPlayerByPrefix($target);
 		if($player === null) {
 			$sender->sendMessage(TextFormat::RED."Invalid player selected");
 			return true;

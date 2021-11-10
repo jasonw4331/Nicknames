@@ -1,7 +1,7 @@
 name: Nicknames
 main: jasonwynn10\Nicknames\Main
 version: 1.0.0
-api: 3.24.0
+api: 4.0.0
 description: "A plugin which allows players to change their display name"
 author: "jasonwynn10"
 
@@ -18,10 +18,9 @@ permissions:
   nicknames:
     description: Nickname command permission
     default: op
-    children:
-      nicknames.use:
-        description: Allows you to nickname yourself!
-        default: op
-      nicknames.others:
-        description: Allows you to nickname others!
-        default: op
+  nicknames.use:
+    description: Allows you to nickname yourself!
+    default: op
+  nicknames.others:
+    description: Allows you to nickname others!
+    default: op
