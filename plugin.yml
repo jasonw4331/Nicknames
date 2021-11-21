@@ -9,15 +9,12 @@ commands:
   nicknames:
     description: Give a nickname to someone
     usage: "/nick <name: string> [player: target]"
-    permission: nick
+    permission: nicknames.use;nicknames.others
     aliases:
       - nick
       - nickname
 
 permissions:
-  nicknames:
-    description: Nickname command permission
-    default: op
   nicknames.use:
     description: Allows you to nickname yourself!
     default: op
