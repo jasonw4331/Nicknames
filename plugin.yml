@@ -1,5 +1,6 @@
 name: Nicknames
 main: jasonwynn10\Nicknames\Main
+src-namespace-prefix: jasonwynn10\Nicknames
 version: 1.0.0
 api: 4.0.0
 description: "A plugin which allows players to change their display name"
