@@ -38,9 +38,6 @@ class Main extends PluginBase implements Listener {
 		$target = $sender->getName();
 		if(isset($args[1]) and $sender->hasPermission("nicknames.other")) {
 			$target = $args[1];
-		}elseif(!$sender->hasPermission("nicknames.other")) {
-			$sender->sendMessage($this->getServer()->getLanguage()->translateString(TextFormat::RED."%commands.generic.permission"));
-			return false;
 		}elseif(!$sender->hasPermission("nicknames.use")) {
 			$sender->sendMessage($this->getServer()->getLanguage()->translateString(TextFormat::RED."%commands.generic.permission"));
 			return false;
