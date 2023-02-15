@@ -9,7 +9,7 @@ author: "jasonwynn10"
 commands:
   nicknames:
     description: Give a nickname to someone
-    usage: "/nick <name: string> [player: target]"
+    usage: "/nick <nickname: string> [player: target]"
     permission: nicknames.use;nicknames.others
     aliases:
       - nick
