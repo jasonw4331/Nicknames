@@ -8,6 +8,7 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerJoinEvent;
+use pocketmine\lang\KnownTranslationFactory;
 use pocketmine\player\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
@@ -46,13 +47,13 @@ class Main extends PluginBase implements Listener{
 		}
 
 		if(!$this->nicknameDB->exists($target)){
-			$sender->sendMessage(TextFormat::RED . "Player is not registered!");
+			$sender->sendMessage(KnownTranslationFactory::commands_generic_player_notFound()->prefix(TextFormat::RED));
 			return true;
 		}
 
 		$player = $this->getServer()->getPlayerByPrefix($target);
 		if($player === null){
-			$sender->sendMessage(TextFormat::RED . "Invalid player selected");
+			$sender->sendMessage(KnownTranslationFactory::commands_generic_player_notFound()->prefix(TextFormat::RED));
 			return true;
 		}
 
