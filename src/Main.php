@@ -26,8 +26,8 @@ class Main extends PluginBase implements Listener {
 			$this->nicknameDB->set($player->getName(), $player->getDisplayName());
 			$this->nicknameDB->save();
 		}
-		$nick = $this->nicknameDB->get($player->getName(), $player->getName());
-		$player->setDisplayName($nick);
+		$nick = $this->nicknameDB->get($player->getName(), $player->getDisplayName());
+		$player->setDisplayName(TextFormat::clean($nick, false));
 	}
 
 	public function onCommand(CommandSender $sender, Command $command, string $label, array $args) : bool {
