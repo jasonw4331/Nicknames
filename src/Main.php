@@ -22,8 +22,8 @@ class Main extends PluginBase implements Listener {
 
 	public function onJoin(PlayerJoinEvent $event) : void {
 		$player = $event->getPlayer();
-		if(!$this->nicknameDB->exists($player->getName())) {
-			$this->nicknameDB->set($player->getName(), $player->getName());
+		if(!$this->nicknameDB->exists($player->getName())){
+			$this->nicknameDB->set($player->getName(), $player->getDisplayName());
 			$this->nicknameDB->save();
 		}
 		$nick = $this->nicknameDB->get($player->getName(), $player->getName());
