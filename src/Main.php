@@ -38,7 +38,7 @@ class Main extends PluginBase implements Listener{
 		}
 
 		$target = $sender->getName();
-		if(isset($args[1]) && $sender->hasPermission("nicknames.other")){
+		if(isset($args[1]) && $command->testPermissionSilent($sender, "nicknames.other")){
 			$target = $args[1];
 		}elseif(!$command->testPermission($sender, "nicknames.use")){
 			return false;
