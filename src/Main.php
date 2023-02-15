@@ -57,7 +57,7 @@ class Main extends PluginBase implements Listener{
 			return true;
 		}
 
-		if($args[0] === "reset"){
+		if(mb_strtolower($args[0]) === "reset"){
 			$player->setDisplayName($target);
 			$sender->sendMessage(TextFormat::GREEN . "Nickname reset");
 			$this->nicknameDB->set($target, $target);
