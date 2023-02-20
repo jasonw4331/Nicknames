@@ -35,9 +35,9 @@ jobs:
           restore-keys: "php-${{ matrix.php }}-composer-"
 
       - name: Install PHPStan Composer dependencies
-        working-directory: ./phpstan
+        working-directory: ./tools/phpstan
         run: composer install --prefer-dist --no-interaction
 
       - name: Run PHPStan
-        working-directory: ./phpstan
+        working-directory: ./tools/phpstan
         run: vendor/bin/phpstan analyze -c ./phpstan.neon.dist
