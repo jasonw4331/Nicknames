@@ -9,7 +9,7 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Nicknames\\": "../src"
+			"jasonwynn10\\Nicknames\\": "../src"
 		}
 	},
 	"config": {
