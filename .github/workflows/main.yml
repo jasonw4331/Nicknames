@@ -41,3 +41,20 @@ jobs:
       - name: Run PHPStan
         working-directory: ./tools/phpstan
         run: vendor/bin/phpstan analyze -c ./phpstan.neon.dist
+  codestyle:
+    name: Code Style checks
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup PHP and tools
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.0
+          tools: php-cs-fixer:3.11
+
+      - name: Run PHP-CS-Fixer
+        run: php-cs-fixer fix --dry-run --diff --config=./tools/cs-fixer/.php-cs-fixer.php
