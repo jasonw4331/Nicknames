@@ -6,12 +6,12 @@ projects:
     icon: "icon.png"
     lint: false
     excludeDirs:
-      - tests
       - .github
-      - build
-      - phpstan
     excludeFiles:
       - .gitignore
       - CONTRIBUTING.md
       - SECURITY.md
+      - phpstan.neon.dist
+      - phpstan-baseline.php
+      - .php-cs-fixer.php
 ...
