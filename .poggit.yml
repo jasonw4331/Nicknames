@@ -1,4 +1,4 @@
---- # Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/jasonwynn10/Nicknames
+--- # Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/jasonw4331/Nicknames
 build-by-default: true
 projects:
   Nicknames:
