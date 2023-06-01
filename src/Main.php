@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace jasonwynn10\Nicknames;
+namespace jasonw4331\Nicknames;
 
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
